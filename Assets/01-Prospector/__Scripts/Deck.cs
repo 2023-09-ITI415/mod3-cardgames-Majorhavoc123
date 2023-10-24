@@ -276,25 +276,25 @@ public class Deck : MonoBehaviour {
 	} // makeCards
 
 	// Shuffle the Cards in Deck.cards
-static public void Shuffle(ref List<Card> oCards) { // a
-// Create a temporary List to hold the new shuffle order
-List<Card> tCards = new List<Card>();
-int ndx; // This will hold the index of the card to be moved
-tCards = new List<Card>(); // Initialize the temporary List
-// Repeat as long as there are cards in the original List
-while (oCards.Count > 0) {
-// Pick the index of a random card
-ndx = Random.Range(0,oCards.Count);
-// Add that card to the temporary List
-tCards.Add (oCards[ndx]);
-// And remove that card from the original List
-oCards.RemoveAt(ndx);
-}
-// Replace the original List with the temporary List
-oCards = tCards;
-// Because oCards is a reference (ref) parameter, the original argument
-// that was passed in is changed as well.
-}
+	static public void Shuffle(ref List<Card> oCards) { // a
+	// Create a temporary List to hold the new shuffle order
+	List<Card> tCards = new List<Card>();
+	int ndx; // This will hold the index of the card to be moved
+	tCards = new List<Card>(); // Initialize the temporary List
+	// Repeat as long as there are cards in the original List
+	while (oCards.Count > 0) {
+	// Pick the index of a random card
+	ndx = Random.Range(0,oCards.Count);
+	// Add that card to the temporary List
+	tCards.Add (oCards[ndx]);
+	// And remove that card from the original List
+	oCards.RemoveAt(ndx);
+	}
+	// Replace the original List with the temporary List
+	oCards = tCards;
+	// Because oCards is a reference (ref) parameter, the original argument
+	// that was passed in is changed as well.
+	}
 
 	
 	//Find the proper face card
