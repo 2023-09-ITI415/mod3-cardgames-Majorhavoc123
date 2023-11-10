@@ -6,29 +6,16 @@ EditorUserSettings:
   serializedVersion: 4
   m_ConfigSettings:
     RecentlyUsedSceneGuid-0:
-      value: 5b50025f520d5c5a5a0d5b7149775b41444f4e2f742d7669757e1962e1b26260
-      flags: 0
-    RecentlyUsedSceneGuid-1:
-      value: 06060c515350085e5b5b597248775948124e1a79787c24637e7d4a6be4b03239
-      flags: 0
-    RecentlyUsedSceneGuid-2:
-<<<<<<< Updated upstream
-      value: 050006500307590c5e5e5c2713770f4244151a2e7b2c71612f7e4b6ae4b5633b
-=======
-      value: 06060c515350085e5b5b597248775948124e1a79787c24637e7d4a6be4b03239
->>>>>>> Stashed changes
-      flags: 0
-    RecentlyUsedSceneGuid-3:
       value: 535203025456585e5d0d5b2042775b44464f1c7a7c7c72642f7f4c37b0e36d6e
       flags: 0
-    RecentlyUsedScenePath-0:
-      value: 2242470311464664323e1e2d03335a1302180a151f2b233e28164d7df7ee3d2cfb
+    RecentlyUsedSceneGuid-1:
+      value: 005551560607595e0e5a557b427707444216487f2a71206175701963b5e56739
       flags: 0
-    RecentlyUsedScenePath-1:
-      value: 224247031146466b1f011f3215204b1f045827151c3a29233d2c1e27edf20b0be1e238ecd86a7129370bfb25
+    RecentlyUsedSceneGuid-2:
+      value: 06060c515350085e5b5b597248775948124e1a79787c24637e7d4a6be4b03239
       flags: 0
-    RecentlyUsedScenePath-2:
-      value: 22424703114646560c07021113265115580216233831
+    RecentlyUsedSceneGuid-3:
+      value: 5a050d54530d0b0808585c7212775d1442154d7c7f7f22607471496bb3e1373a
       flags: 0
     vcSharedLogLevel:
       value: 0d5e400f0650
@@ -46,5 +33,5 @@ EditorUserSettings:
   m_VCProjectOverlayIcons: 1
   m_VCHierarchyOverlayIcons: 1
   m_VCOtherOverlayIcons: 1
-  m_VCAllowAsyncUpdate: 0
+  m_VCAllowAsyncUpdate: 1
   m_ArtifactGarbageCollection: 1
