@@ -13,14 +13,14 @@ namespace Clock
         discard
     }
 
-    public class CardProspector : Card
-    { // Make sure CardProspector extends Card
-        [Header("Set Dynamically: CardProspector")]
+    public class CardClock : Card
+    { // Make sure CardClock extends Card
+        [Header("Set Dynamically: CardClock")]
         // This is how you use the enum eCardState
         public eCardState state = eCardState.drawpile;
 
         // The hiddenBy list stores which other cards will keep this one face down
-        public List<CardProspector> hiddenBy = new List<CardProspector>();
+        public List<CardClock> hiddenBy = new List<CardClock>();
 
         // The layoutID matches this card to the tableau XML if it's a tableau card
         public int layoutID;
@@ -31,8 +31,8 @@ namespace Clock
         // This allows the card to react to being clicked
         override public void OnMouseUpAsButton()
         {
-            // Call the CardClicked method on the Prospector singleton
-            Prospector.S.CardClicked(this);
+            // Call the CardClicked method on the Clock singleton
+            Clock.S.CardClicked(this);
             // Also call the base class (Card.cs) version of this method
             base.OnMouseUpAsButton(); // a
         }

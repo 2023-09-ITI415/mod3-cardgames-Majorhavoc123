@@ -6,9 +6,9 @@ using System.Collections.Generic;
 
 namespace Clock
 {
-    public class Prospector : MonoBehaviour
+    public class Clock : MonoBehaviour
     {
-        public static Prospector S;
+        public static Clock S;
 
         [Header("Set in Inspector")]
         public TextAsset deckXML;
@@ -28,11 +28,11 @@ namespace Clock
         [Header("Set Dynamically")]
         public Deck deck;
         public Layout layout;
-        public List<CardProspector> drawPile;
+        public List<CardClock> drawPile;
         public Transform layoutAnchor;
-        public CardProspector target;
-        public List<CardProspector> tableau;
-        public List<CardProspector> discardPile;
+        public CardClock target;
+        public List<CardClock> tableau;
+        public List<CardClock> discardPile;
         public FloatingScore fsRun;
 
         void Awake()
@@ -88,25 +88,25 @@ namespace Clock
 
             layout = GetComponent<Layout>(); // Get the Layout component
             layout.ReadLayout(layoutXML.text); // Pass LayoutXML to it
-            drawPile = ConvertListCardsToListCardProspectors(deck.cards);
+            drawPile = ConvertListCardsToListCardClocks(deck.cards);
             LayoutGame();
         }
 
-        List<CardProspector> ConvertListCardsToListCardProspectors(List<Card> lCD)
+        List<CardClock> ConvertListCardsToListCardClocks(List<Card> lCD)
         {
-            List<CardProspector> lCP = new List<CardProspector>();
-            CardProspector tCP;
+            List<CardClock> lCP = new List<CardClock>();
+            CardClock tCP;
             foreach (Card tCD in lCD)
             {
-                tCP = tCD as CardProspector; // a
+                tCP = tCD as CardClock; // a
                 lCP.Add(tCP);
             }
             return (lCP);
         }
 
-        CardProspector Draw()
+        CardClock Draw()
         {
-            CardProspector cd = drawPile[0]; // Pull the 0th CardProspector
+            CardClock cd = drawPile[0]; // Pull the 0th CardClock
             drawPile.RemoveAt(0); // Then remove it from List<> drawPile
             return (cd); // And return it
         }
@@ -123,7 +123,7 @@ namespace Clock
                 layoutAnchor.transform.position = layoutCenter; // Position it
             }
 
-            CardProspector cp;
+            CardClock cp;
             // Follow the layout
             foreach (SlotDef tSD in layout.slotDefs)
             {
@@ -141,13 +141,13 @@ namespace Clock
                 // ^ Set the localPosition of the card based on slotDef
                 cp.layoutID = tSD.id;
                 cp.slotDef = tSD;
-                // CardProspectors in the tableau have the state CardState.tableau
+                // CardClocks in the tableau have the state CardState.tableau
                 cp.state = eCardState.tableau;
                 cp.SetSortingLayerName(tSD.layerName); // Set the sorting layers
-                tableau.Add(cp); // Add this CardProspector to the List<> tableau
+                tableau.Add(cp); // Add this CardClock to the List<> tableau
             }
             // Set which cards are hiding others
-            foreach (CardProspector tCP in tableau)
+            foreach (CardClock tCP in tableau)
             {
                 foreach (int hid in tCP.slotDef.hiddenBy)
                 {
@@ -162,10 +162,10 @@ namespace Clock
             UpdateDrawPile();
         }
 
-        // Convert from the layoutID int to the CardProspector with that ID
-        CardProspector FindCardByLayoutID(int layoutID)
+        // Convert from the layoutID int to the CardClock with that ID
+        CardClock FindCardByLayoutID(int layoutID)
         {
-            foreach (CardProspector tCP in tableau)
+            foreach (CardClock tCP in tableau)
             {
                 // Search through all cards in the tableau List<>
                 if (tCP.layoutID == layoutID)
@@ -181,10 +181,10 @@ namespace Clock
         // This turns cards in the Mine face-up or face-down
         void SetTableauFaces()
         {
-            foreach (CardProspector cd in tableau)
+            foreach (CardClock cd in tableau)
             {
                 bool faceUp = true; // Assume the card will be face-up
-                foreach (CardProspector cover in cd.hiddenBy)
+                foreach (CardClock cover in cd.hiddenBy)
                 {
                     // If either of the covering cards are in the tableau
                     if (cover.state == eCardState.tableau)
@@ -197,7 +197,7 @@ namespace Clock
         }
 
         // Moves the current target to the discardPile
-        void MoveToDiscard(CardProspector cd)
+        void MoveToDiscard(CardClock cd)
         {
             // Set the state of the card to discard
             cd.state = eCardState.discard;
@@ -216,7 +216,7 @@ namespace Clock
         }
 
         // Make cd the new target card
-        void MoveToTarget(CardProspector cd)
+        void MoveToTarget(CardClock cd)
         {
             // If there is currently a target card, move it to discardPile
             if (target != null)
@@ -239,7 +239,7 @@ namespace Clock
         // Arranges all the cards of the drawPile to show how many are left
         void UpdateDrawPile()
         {
-            CardProspector cd;
+            CardClock cd;
             // Go through all the cards of the drawPile
             for (int i = 0; i < drawPile.Count; i++)
             {
@@ -261,7 +261,7 @@ namespace Clock
         }
 
         // CardClicked is called any time a card in the game is clicked
-        public void CardClicked(CardProspector cd)
+        public void CardClicked(CardClock cd)
         {
             // The reaction is determined by the state of the clicked card
             switch (cd.state)
@@ -320,7 +320,7 @@ namespace Clock
                 return;
             }
             // Check for remaining valid plays
-            foreach (CardProspector cd in tableau)
+            foreach (CardClock cd in tableau)
             {
                 if (AdjacentRank(cd, target))
                 {
@@ -366,7 +366,7 @@ namespace Clock
                 FloatingScoreHandler(eScoreEvent.gameLoss);
             }
             // Reload the scene, resetting the game
-            // SceneManager.LoadScene("__Prospector_Scene_0");
+            // SceneManager.LoadScene("__Clock_Scene_0");
             // Reload the scene in reloadDelay seconds
             // This will give the score a moment to travel
             Invoke("ReloadLevel", reloadDelay); // a
@@ -375,11 +375,11 @@ namespace Clock
         void ReloadLevel()
         {
             // Reload the scene, resetting the game
-            SceneManager.LoadScene("__Prospector_Scene_0");
+            SceneManager.LoadScene("__Clock_Scene_0");
         }
 
         // Return true if the two cards are adjacent in rank (A & K wrap around)
-        public bool AdjacentRank(CardProspector c0, CardProspector c1)
+        public bool AdjacentRank(CardClock c0, CardClock c1)
         {
             // If either card is face-down, it's not adjacent.
             if (!c0.faceUp || !c1.faceUp)
