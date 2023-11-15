@@ -29,6 +29,7 @@ namespace Clock
         [Header("Set Dynamically")]
         public Deck deck;
         public Layout layout;
+
         public List<CardProspector> drawPile;
         public Dictionary<int, List<CardProspector>> cardPiles;
         public Transform layoutAnchor;
@@ -82,7 +83,6 @@ namespace Clock
             deck.InitDeck(deckXML.text);
             Deck.Shuffle(ref deck.cards); // This shuffles the deck by reference
 
-            
             for (int cNum = 0; cNum < 13; cNum++)
             { // b
                 int cardNum = (cNum * 13);
@@ -90,12 +90,11 @@ namespace Clock
                 cardPiles[cNum].Add(deck.cards[cardNum++] as CardProspector);
                 cardPiles[cNum].Add(deck.cards[cardNum++] as CardProspector);
                 cardPiles[cNum].Add(deck.cards[cardNum++] as CardProspector);
-                
             }
 
             layout = GetComponent<Layout>(); // Get the Layout component
             layout.ReadLayout(layoutXML.text); // Pass LayoutXML to it
-            drawPile = ConvertListCardsToListCardProspectors(deck.cards);
+            //drawPile = ConvertListCardsToListCardProspectors(deck.cards);
             LayoutGame();
         }
 
@@ -116,6 +115,25 @@ namespace Clock
             CardProspector cd = drawPile[0]; // Pull the 0th CardProspector
             drawPile.RemoveAt(0); // Then remove it from List<> drawPile
             return (cd); // And return it
+        }
+        void UpdatePiles()
+        {
+            CardProspector cd;
+            for (int i = 0; i < 13; i++)
+            {
+                for (int j = 0; j < cardPiles[i].Count; j++)
+                {
+                    cd = cardPiles[i][j];
+                    Vector2 dpStagger = layout.drawPile.stagger;
+                    cd.transform.localPosition = new Vector3(
+                        layout.multiplier.x * (layout.drawPile.x + i * dpStagger.x),
+                        layout.multiplier.y * (layout.drawPile.y + i * dpStagger.y),
+                        -layout.drawPile.layerID + 0.1f * i
+                    );
+                    cd.faceUp = false;
+                    cd.state = eCardState.drawpile;
+                }
+            }
         }
 
         // LayoutGame() positions the initial tableau of cards, a.k.a. the "mine"
@@ -167,6 +185,7 @@ namespace Clock
             MoveToTarget(Draw());
             // Set up the Draw pile
             UpdateDrawPile();
+            UpdatePiles();
         }
 
         // Convert from the layoutID int to the CardProspector with that ID
