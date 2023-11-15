@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Clock
 {
@@ -29,6 +30,7 @@ namespace Clock
         public Deck deck;
         public Layout layout;
         public List<CardProspector> drawPile;
+        public Dictionary<int, List<CardProspector>> cardPiles;
         public Transform layoutAnchor;
         public CardProspector target;
         public List<CardProspector> tableau;
@@ -80,11 +82,16 @@ namespace Clock
             deck.InitDeck(deckXML.text);
             Deck.Shuffle(ref deck.cards); // This shuffles the deck by reference
 
-            //Card c;
-            //for (int cNum=0; cNum<deck.cards.Count; cNum++) { // b
-            //c = deck.cards[cNum];
-            //c.transform.localPosition = new Vector3( (cNum%13)*3, cNum/13*4, 0 );
-            //}
+            
+            for (int cNum = 0; cNum < 13; cNum++)
+            { // b
+                int cardNum = (cNum * 13);
+                cardPiles[cNum].Add(deck.cards[cardNum++] as CardProspector);
+                cardPiles[cNum].Add(deck.cards[cardNum++] as CardProspector);
+                cardPiles[cNum].Add(deck.cards[cardNum++] as CardProspector);
+                cardPiles[cNum].Add(deck.cards[cardNum++] as CardProspector);
+                
+            }
 
             layout = GetComponent<Layout>(); // Get the Layout component
             layout.ReadLayout(layoutXML.text); // Pass LayoutXML to it

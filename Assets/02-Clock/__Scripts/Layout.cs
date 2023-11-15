@@ -42,6 +42,9 @@ namespace Clock
             "Draw"
         };
 
+
+        public Dictionary<int, SlotDef> cards;
+
         // This function is called to read in the LayoutXML.xml file
         public void ReadLayout(string xmlText)
         {
@@ -80,6 +83,8 @@ namespace Clock
                     case "slot":
                         tSD.faceUp = (slotsX[i].att("faceup") == "1");
                         tSD.id = int.Parse(slotsX[i].att("id"));
+                        tSD.stagger.x = float.Parse(slotsX[i].att("xstagger"));
+                        cards[tSD.id] = tSD;
                         if (slotsX[i].HasAtt("hiddenby"))
                         {
                             string[] hiding = slotsX[i].att("hiddenby").Split(',');
